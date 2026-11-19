@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+node_modules/
+frontend/dist/
+data/*.csv
+data/samples/
+data/train_log.txt
+.env
+
+# لا ترفع ملفات APK أبداً (قد تكون عيّنات خبيثة)
+*.apk
+*.zip
+# نتائج المحرك والسجلات والذاكرة المؤقتة
+backend/droidshield_engine/results/
+results/
+*.log
+.pytest_cache/
+*.tmp
+frontend/.env

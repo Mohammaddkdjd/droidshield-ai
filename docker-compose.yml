@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    image: android-malware-xai-backend
+    container_name: malware-xai-backend
+    environment:
+      - MAX_APK_MB=100
+      - CORS_ORIGINS=http://localhost:8080,http://localhost:5173
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    image: android-malware-xai-frontend
+    container_name: malware-xai-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

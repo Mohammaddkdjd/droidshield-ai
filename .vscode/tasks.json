@@ -1,0 +1,89 @@
+{
+  // Ctrl+Shift+B  => يشغّل الخادم + الواجهة ثم يفتح المتصفح
+  // F5            => نفس الشيء مع إمكانية التصحيح (انظر launch.json)
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backend: FastAPI",
+      "type": "shell",
+      "command": "& '${workspaceFolder}\\.venv\\Scripts\\python.exe' -m uvicorn app.main:app --port 8000 --reload",
+      "options": {
+        "cwd": "${workspaceFolder}\\backend",
+        "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] },
+        "env": { "PYTHONIOENCODING": "utf-8", "PYTHONWARNINGS": "ignore", "NO_COLOR": "1" }
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "uvicorn",
+        "pattern": { "regexp": "^__never_matches__$" },
+        "background": {
+          "activesBegin": true,
+          "beginsPattern": "Will watch|Started reloader|Uvicorn running",
+          "endsPattern": "Application startup complete"
+        }
+      },
+      "presentation": { "group": "servers", "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Frontend: React (Vite)",
+      "type": "shell",
+      "command": "npm run dev -- --port 5173 --strictPort",
+      "options": {
+        "cwd": "${workspaceFolder}\\frontend",
+        "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] },
+        "env": { "NO_COLOR": "1", "FORCE_COLOR": "0" }
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "vite",
+        "pattern": { "regexp": "^__never_matches__$" },
+        "background": {
+          "activesBegin": true,
+          "beginsPattern": "vite|VITE",
+          "endsPattern": "ready in"
+        }
+      },
+      "presentation": { "group": "servers", "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Open in Browser",
+      "type": "shell",
+      "command": "Start-Process 'http://localhost:5173'",
+      "options": { "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
+      "presentation": { "reveal": "never", "close": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Servers",
+      "dependsOn": ["Backend: FastAPI", "Frontend: React (Vite)"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run All",
+      "dependsOn": ["Start Servers", "Open in Browser"],
+      "dependsOrder": "sequence",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "Train Model",
+      "type": "shell",
+      "command": "& '${workspaceFolder}\\.venv\\Scripts\\python.exe' -u backend/ml/train_svm.py --data data/drebin-215-dataset-5560malware-9476-benign.csv --no-scaler",
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] },
+        "env": { "PYTHONIOENCODING": "utf-8", "PYTHONWARNINGS": "ignore" }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop Servers",
+      "type": "shell",
+      // uvicorn --reload: على Windows قد يبقى العامل (الابن) يخدم المنفذ بعد موت الأب، لذا نوقف الأبناء أيضاً
+      "command": "foreach ($port in 8000, 5173) { Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue | ForEach-Object { $id = $_.OwningProcess; Get-CimInstance Win32_Process -Filter \"ParentProcessId=$id\" | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue } }; 'stopped'",
+      "options": { "shell": { "executable": "powershell.exe", "args": ["-NoProfile", "-Command"] } },
+      "problemMatcher": []
+    }
+  ]
+}

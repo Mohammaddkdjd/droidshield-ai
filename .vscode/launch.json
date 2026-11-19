@@ -1,0 +1,34 @@
+{
+  // اضغط F5 واختر "▶ Run Full Stack" (الخيار الأول والافتراضي):
+  // يشغّل الخادم بوضع التصحيح + واجهة React + يفتح Chrome على الموقع
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "▶ Run Full Stack",
+      "configurations": ["Backend (FastAPI)", "Frontend (Chrome)"],
+      "preLaunchTask": "Frontend: React (Vite)",
+      "stopAll": true
+    }
+  ],
+  "configurations": [
+    {
+      "name": "Backend (FastAPI)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["app.main:app", "--port", "8000"],
+      "cwd": "${workspaceFolder}/backend",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "env": { "PYTHONIOENCODING": "utf-8", "PYTHONWARNINGS": "ignore" },
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Frontend (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src"
+    }
+  ]
+}

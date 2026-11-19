@@ -1,0 +1,84 @@
+{
+  "best_params": {
+    "svm__C": 10,
+    "svm__gamma": "scale"
+  },
+  "cv_f1": 0.8462509313346693,
+  "accuracy": 0.9150805270863837,
+  "balanced_accuracy": 0.9072877244056283,
+  "precision_malware": 0.8614718614718615,
+  "recall_malware": 0.8844444444444445,
+  "f1_malware": 0.8728070175438597,
+  "roc_auc": 0.9609121785540999,
+  "false_positive_rate": 0.06986899563318777,
+  "false_negative_rate": 0.11555555555555555,
+  "confusion_matrix": [
+    [
+      426,
+      32
+    ],
+    [
+      26,
+      199
+    ]
+  ],
+  "baselines": {
+    "majority_class": {
+      "accuracy": 0.6705710102489019,
+      "balanced_accuracy": 0.5,
+      "precision_malware": 0.0,
+      "recall_malware": 0.0,
+      "f1_malware": 0.0,
+      "roc_auc": 0.5,
+      "false_positive_rate": 0.0,
+      "false_negative_rate": 1.0,
+      "confusion_matrix": [
+        [
+          458,
+          0
+        ],
+        [
+          225,
+          0
+        ]
+      ]
+    },
+    "logistic_regression": {
+      "accuracy": 0.8726207906295754,
+      "balanced_accuracy": 0.8812809315866084,
+      "precision_malware": 0.7555555555555555,
+      "recall_malware": 0.9066666666666666,
+      "f1_malware": 0.8242424242424242,
+      "roc_auc": 0.940737506065017,
+      "false_positive_rate": 0.14410480349344978,
+      "false_negative_rate": 0.09333333333333334,
+      "confusion_matrix": [
+        [
+          392,
+          66
+        ],
+        [
+          21,
+          204
+        ]
+      ]
+    }
+  },
+  "n_train": 2731,
+  "n_test": 683,
+  "n_features": 110,
+  "data": {
+    "raw_rows": 18412,
+    "raw_label_counts": {
+      "1": 12888,
+      "0": 5524
+    },
+    "after_dedup": 3580,
+    "conflicting_rows_removed": 166,
+    "clean_rows": 3414,
+    "clean_label_counts": {
+      "0": 2290,
+      "1": 1124
+    }
+  }
+}

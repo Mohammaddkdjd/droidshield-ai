@@ -1,0 +1,15 @@
+{
+  "model": "CalibratedClassifierCV(SVC-RBF, sigmoid)",
+  "label_encoding": {
+    "malware": 1,
+    "benign": 0
+  },
+  "dataset": "Final_Balanced_Three_Datasets.csv",
+  "schema_fingerprint": "b0f737610fbe03c34602221aebb0d5dfd6c9cc61b9d3d0ea54252c3255929be6",
+  "n_features": 110,
+  "feature_rule": "F=1 iff the APK requests android.permission.F (uses-permission or uses-permission-sdk-23)",
+  "input_dtype": "int8 (cast to float32 before predict)",
+  "trained_at": "2026-11-16T00:31:58+00:00",
+  "sklearn_version": "1.9.1",
+  "engine_version": "1.0.0"
+}
