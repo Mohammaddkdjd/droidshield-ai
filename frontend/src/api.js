@@ -1,5 +1,14 @@
 export const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
+/** detail من FastAPI: نص، أو قائمة أخطاء تحقق (422) -> نص مقروء. */
+function errorText(detail, status) {
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail) && detail.length) {
+    return detail.map((e) => `${(e.loc || []).slice(1).join(".")}: ${e.msg}`).join(" ، ");
+  }
+  return `خطأ من الخادم (${status})`;
+}
+
 /** يرفع ملف APK إلى POST /predict مع تتبّع تقدم الرفع. */
 export function scanApk(file, { onUploadProgress, onUploaded } = {}) {
   return new Promise((resolve, reject) => {
@@ -15,7 +24,7 @@ export function scanApk(file, { onUploadProgress, onUploaded } = {}) {
     xhr.upload.onload = () => onUploaded?.();
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) resolve(xhr.response);
-      else reject(new Error(xhr.response?.detail || `خطأ من الخادم (${xhr.status})`));
+      else reject(new Error(errorText(xhr.response?.detail, xhr.status)));
     };
     xhr.onerror = () => reject(new Error("تعذّر الاتصال بالخادم. تأكد من تشغيل الواجهة الخلفية على المنفذ 8000."));
     xhr.send(form);
@@ -35,7 +44,7 @@ export async function scanFeatures(features) {
     throw new Error("تعذّر الاتصال بالخادم. تأكد من تشغيل الواجهة الخلفية على المنفذ 8000.");
   }
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.detail || `خطأ من الخادم (${res.status})`);
+  if (!res.ok) throw new Error(errorText(data.detail, res.status));
   return data;
 }
 

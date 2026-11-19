@@ -6,8 +6,11 @@ services:
     environment:
       - MAX_APK_MB=100
       - CORS_ORIGINS=http://localhost:8080,http://localhost:5173
+      - DROIDSHIELD_TIMEOUT=300
     ports:
       - "8000:8000"
+    volumes:
+      - droidshield_results:/app/results   # نتائج التحليل تبقى بعد إعادة إنشاء الحاوية
     restart: unless-stopped
 
   frontend:
@@ -20,3 +23,6 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
+
+volumes:
+  droidshield_results:

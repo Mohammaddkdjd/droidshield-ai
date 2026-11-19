@@ -20,6 +20,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Annotated
+
 from pydantic import BaseModel, Field
 
 from droidshield_engine import AnalysisEngine
@@ -74,7 +76,9 @@ app.add_middleware(
 
 
 class FeaturesRequest(BaseModel):
-    features: dict[str, float] = Field(..., examples=[{"SEND_SMS": 1, "READ_PHONE_STATE": 1}])
+    # الميزات ثنائية (الإذن مطلوب أو لا): أي قيمة غير 0/1 تُرفض بـ 422 بدل تنبؤ بلا معنى
+    features: dict[str, Annotated[int, Field(ge=0, le=1)]] = Field(
+        ..., examples=[{"SEND_SMS": 1, "READ_PHONE_STATE": 1}])
     explain: bool = True
 
 
