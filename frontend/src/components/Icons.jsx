@@ -59,3 +59,39 @@ export const Table = (p) => (
 export const Chart = (p) => (
   <svg {...base} {...p}><path d="M4 20h16" /><path d="M7 16V9M12 16V5M17 16v-4" /></svg>
 );
+export const Github = (p) => (
+  <svg {...base} {...p}><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+);
+export const Code = (p) => (
+  <svg {...base} {...p}><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 4l-3 16" /></svg>
+);
+export const Globe = (p) => (
+  <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" /></svg>
+);
+export const Key = (p) => (
+  <svg {...base} {...p}><circle cx="8" cy="15" r="4" /><path d="M10.8 12.2L20 3M16 7l3 3M14 9l2 2" /></svg>
+);
+export const Terminal = (p) => (
+  <svg {...base} {...p}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M7 9l3 3-3 3M12 15h5" /></svg>
+);
+export const Server = (p) => (
+  <svg {...base} {...p}><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg>
+);
+export const Layers = (p) => (
+  <svg {...base} {...p}><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></svg>
+);
+export const Unlock = (p) => (
+  <svg {...base} {...p}><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 017.5-2" /></svg>
+);
+export const Gauge = (p) => (
+  <svg {...base} {...p}><path d="M4 16a8 8 0 1116 0" /><path d="M12 16l4-5" /><circle cx="12" cy="16" r="1" /></svg>
+);
+export const Clock = (p) => (
+  <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+);
+export const Sparkle = (p) => (
+  <svg {...base} {...p}><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" /><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z" /></svg>
+);
+export const Fingerprint = (p) => (
+  <svg {...base} {...p}><path d="M12 11v3a8 8 0 01-1.5 4.6M8 10a4 4 0 018 0v2.5M5 8.5a8 8 0 0114 0M5.5 14a12 12 0 00.6-4M17.5 16.5A16 16 0 0018 12" /></svg>
+);

@@ -10,6 +10,8 @@ import ShapWaterfall from "./components/ShapWaterfall.jsx";
 import DetectedFeatures from "./components/DetectedFeatures.jsx";
 import AppInfo from "./components/AppInfo.jsx";
 import ModelCard from "./components/ModelCard.jsx";
+import EngineInsights from "./components/EngineInsights.jsx";
+import { HowItWorks, StatsStrip } from "./components/Landing.jsx";
 import { Alert } from "./components/Icons.jsx";
 
 export default function App() {
@@ -110,16 +112,17 @@ export default function App() {
 
   return (
     <>
-      <Header status={modelStatus} dark={dark} onToggleTheme={() => setTheme(dark ? "light" : "dark")} />
+      <Header status={modelStatus} dark={dark} onHome={reset}
+              onToggleTheme={() => setTheme(dark ? "light" : "dark")} />
 
       <main className="page">
         {!result && (
           <section className="hero">
-            <span className="eyebrow">تحليل ساكن · تعلّم آلي · ذكاء اصطناعي قابل للتفسير</span>
-            <h1>افحص تطبيق أندرويد قبل تثبيته</h1>
+            <span className="eyebrow"><i className="eyebrow-dot" aria-hidden />تحليل ساكن · تعلّم آلي · ذكاء اصطناعي قابل للتفسير</span>
+            <h1>افحص تطبيق أندرويد <span className="grad">قبل أن تثبّته</span></h1>
             <p className="lead">
-              ارفع ملف APK ليُفكَّك ويُحلَّل بنموذج SVM مدرّب على أكثر من 7,000 تطبيق،
-              ثم تحصل على نسبة أمان وشرح مفصّل لسبب القرار.
+              ارفع ملف APK ليُحلَّل تحليلاً ساكناً دون تشغيله، ثم يحسب نموذج تعلّم آلي احتمال أن يكون
+              خبيثاً، ويشرح لك بالتفصيل أي أذوناته أثّرت في القرار.
             </p>
           </section>
         )}
@@ -127,6 +130,13 @@ export default function App() {
         {!result && (
           <Uploader onFile={handleFile} onDemo={runDemo} disabled={busy}
                     phase={phase} progress={progress} source={source} />
+        )}
+
+        {!result && !busy && phase !== "error" && (
+          <>
+            <StatsStrip info={modelInfo} />
+            <HowItWorks />
+          </>
         )}
 
         {phase === "error" && (
@@ -141,21 +151,27 @@ export default function App() {
 
         {result && (
           <div className="results" ref={resultsRef}>
+            <nav className="section-nav" aria-label="أقسام النتيجة">
+              {[["verdict", "النتيجة"], ["explain", "تفسير القرار"],
+                ...(result.analysis ? [["engine", "تحليل المحرك"]] : []), ["details", "الأذونات والتطبيق"]]
+                .map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+            </nav>
             <VerdictBanner result={result} source={source} onReset={reset} />
             <div className="grid-2">
               <SafetyGauge result={result} />
               <MetricTiles result={result} />
             </div>
-            {result.explanation && <ShapWaterfall explanation={result.explanation} />}
-            <div className="grid-2">
+            {result.explanation && <div id="explain"><ShapWaterfall explanation={result.explanation} /></div>}
+            <EngineInsights analysis={result.analysis} />
+            <div className="grid-2" id="details">
               <DetectedFeatures result={result} />
               <AppInfo result={result} />
             </div>
           </div>
         )}
 
-        <ModelCard info={modelInfo} />
       </main>
+      <ModelCard info={modelInfo} />
     </>
   );
 }

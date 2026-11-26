@@ -1,30 +1,36 @@
-import { Moon, Shield, Sun } from "./Icons.jsx";
+import { Github, Moon, Shield, Sun } from "./Icons.jsx";
+
+const REPO_URL = "https://github.com/Mohammaddkdjd/droidshield-ai";
 
 const STATUS = {
-  loading: { label: "جارٍ الاتصال بالنموذج", cls: "st-loading" },
-  online: { label: "النموذج متصل", cls: "st-online" },
+  loading: { label: "جارٍ الاتصال", cls: "st-loading" },
+  online: { label: "النموذج جاهز", cls: "st-online" },
   offline: { label: "الخادم غير متصل", cls: "st-offline" },
 };
 
-export default function Header({ status, dark, onToggleTheme }) {
+export default function Header({ status, dark, onToggleTheme, onHome }) {
   const s = STATUS[status];
   return (
     <header className="nav">
       <div className="nav-inner">
-        <div className="brand">
+        <button className="brand" onClick={onHome} aria-label="الصفحة الرئيسية">
           <span className="brand-mark"><Shield width={22} height={22} /></span>
-          <div>
-            <div className="brand-name">درع أندرويد</div>
-            <div className="brand-sub">Android Malware XAI</div>
-          </div>
-        </div>
+          <span className="brand-text">
+            <span className="brand-name ltr">DroidShield <b>AI</b></span>
+            <span className="brand-sub">درع أندرويد · كشف البرمجيات الخبيثة</span>
+          </span>
+        </button>
         <div className="nav-actions">
           <span className={`status ${s.cls}`} role="status">
-            <i className="dot" aria-hidden />{s.label}
+            <i className="dot" aria-hidden />
+            <span className="status-label">{s.label}</span>
           </span>
+          <a className="icon-btn" href={REPO_URL} target="_blank" rel="noreferrer" aria-label="الكود المصدري على GitHub">
+            <Github width={19} height={19} />
+          </a>
           <button className="icon-btn" onClick={onToggleTheme}
                   aria-label={dark ? "التبديل إلى الوضع الفاتح" : "التبديل إلى الوضع الداكن"}>
-            {dark ? <Sun /> : <Moon />}
+            {dark ? <Sun width={19} height={19} /> : <Moon width={19} height={19} />}
           </button>
         </div>
       </div>

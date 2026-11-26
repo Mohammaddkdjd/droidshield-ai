@@ -52,7 +52,8 @@ export default function Uploader({ onFile, onDemo, disabled, phase, progress, so
           />
           <span className="drop-icon"><Upload width={26} height={26} /></span>
           <p className="drop-title">اسحب ملف APK وأفلته هنا</p>
-          <p className="muted">أو <span className="link">اختر ملفاً من جهازك</span> · الحد الأقصى 100 MB</p>
+          <p className="muted">أو <span className="link">اختر ملفاً من جهازك</span></p>
+          <span className="drop-meta"><span className="ltr">.apk</span> · حتى <bdi className="ltr">100 MB</bdi></span>
           {hint && <p className="hint-error">{hint}</p>}
         </div>
       )}
@@ -61,7 +62,7 @@ export default function Uploader({ onFile, onDemo, disabled, phase, progress, so
         <ul className="trust">
           <li><Eye width={16} height={16} /> تحليل ساكن، لا يُشغَّل التطبيق</li>
           <li><Trash width={16} height={16} /> يُحذف الملف فور انتهاء الفحص</li>
-          <li><Lock width={16} height={16} /> يُعالَج على خادمك المحلي</li>
+          <li><Lock width={16} height={16} /> يُحلَّل في عملية معزولة على خادمك</li>
         </ul>
         <div className="demos">
           <span className="muted small"><Beaker width={15} height={15} /> لا يوجد ملف؟ جرّب مثالاً:</span>
@@ -78,7 +79,7 @@ function Progress({ phase, progress, elapsed, source }) {
   const isDemo = source?.kind === "demo";
   const steps = [
     { key: "upload", label: isDemo ? "تجهيز الميزات" : "رفع الملف" },
-    { key: "analyze", label: isDemo ? "حساب الاحتمال (SVM)" : "تفكيك الكود واستخراج الميزات" },
+    { key: "analyze", label: isDemo ? "حساب الاحتمال (SVM)" : "التحليل الساكن (12 وحدة)" },
     { key: "explain", label: isDemo ? "تفسير القرار (SHAP)" : "التنبؤ وتفسير القرار" },
   ];
   const activeIdx = phase === "uploading" ? 0 : 1;
@@ -107,7 +108,7 @@ function Progress({ phase, progress, elapsed, source }) {
       <p className="muted small">
         {phase === "uploading"
           ? `${Math.round(progress * 100)}%`
-          : `مضى ${elapsed} ث · قد يستغرق التحليل حتى دقيقة للتطبيقات الكبيرة`}
+          : `مضى ${elapsed} ث · التطبيقات الكبيرة قد تحتاج دقيقة أو أكثر`}
       </p>
     </div>
   );
